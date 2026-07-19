@@ -1,0 +1,303 @@
+/* ==========================================================================
+   布局与基础导航（保持干净比例）
+   ========================================================================== */
+.ali-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding-bottom: 30px; 
+  border-bottom: 1px solid #ede8da; 
+  margin-bottom: 50px; 
+}
+.brand-logo { 
+  font-family: monospace; 
+  font-weight: 700; 
+  font-size: 0.9rem; 
+  letter-spacing: 2px; 
+  color: #1c1917; 
+  cursor: pointer; 
+}
+.nav-accent-btn { 
+  font-size: 0.85rem; 
+  font-weight: 600; 
+  color: #fff; 
+  background: #2563eb; 
+  padding: 8px 18px; 
+  border-radius: 20px; 
+  text-decoration: none; 
+}
+
+.ali-grid-layout { 
+  display: grid; 
+  grid-template-columns: 350px 1fr; 
+  gap: 50px; 
+}
+.ali-profile-sidebar .sticky-box { 
+  position: sticky; 
+  top: 40px; 
+}
+.profile-name { 
+  font-family: Georgia, serif; 
+  font-size: 2.4rem; 
+  font-weight: 800; 
+  color: #1c1917; 
+  margin-bottom: 16px; 
+}
+.profile-bio { 
+  color: #57534e; 
+  font-size: 1.02rem; 
+  line-height: 1.6; 
+  margin-bottom: 40px; 
+}
+
+/* 订阅卡片 */
+.ali-newsletter-card { 
+  background: #fdfaf2; 
+  border: 1px dashed #d6d1c2; 
+  padding: 30px; 
+  border-radius: 12px; 
+}
+.news-badge { 
+  font-family: monospace; 
+  font-size: 0.7rem; 
+  letter-spacing: 1.5px; 
+  color: #b45309; 
+  font-weight: 700; 
+  display: block; 
+  margin-bottom: 10px; 
+}
+.news-title { 
+  font-family: Georgia, serif; 
+  font-size: 1.4rem; 
+  font-weight: 700; 
+  margin-bottom: 8px; 
+}
+.news-subtitle { 
+  color: #78716c; 
+  font-size: 0.88rem; 
+  line-height: 1.5; 
+  margin-bottom: 20px; 
+}
+.news-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+}
+.news-form input { 
+  padding: 14px; 
+  border: 1px solid #d6d1c2; 
+  border-radius: 6px; 
+  font-size: 0.9rem; 
+  outline: none; 
+  background: #fff; 
+}
+.news-form button { 
+  padding: 14px; 
+  background: #1c1917; 
+  color: #fff; 
+  border: none; 
+  border-radius: 6px; 
+  font-weight: 600; 
+  cursor: pointer; 
+}
+
+/* ==========================================================================
+   🧱 Bento 网格矩阵配置（严格锁定高低落差结构）
+   ========================================================================== */
+.ali-offerings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 24px; 
+  align-items: start; /* 保持各自骨架高度，强力逼出不规律错落感 */
+}
+
+/* 共有卡片基础样式：默认状态全员彻底对齐 */
+.offering-card {
+  border-radius: 16px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: #ffffff; /* 🚀 默认通通是干净、极简的纯白纸质背景 */
+  border: 1px solid #ede8da;
+  min-height: 250px; 
+  color: #1c1917;
+}
+
+/* 锁定左侧长卡片布局 */
+.card-span-two-rows {
+  grid-column: 1; 
+  grid-row: span 2; 
+  min-height: 524px; /* 正好撑满两行 */
+  justify-content: center;
+}
+
+/* ==========================================================================
+   🔥 核心重构：任何人鼠标悬停（:hover）时，通通华丽变身为“珊瑚橙”背景
+   ========================================================================== */
+.offering-card:hover {
+  background-color: #ff9e79 !important; /* 🚀 统一蜕变为高级珊瑚橙色 */
+  border-color: #ff9e79;
+  color: #ffffff !important; /* 🚀 内部文字统一变为纯白 */
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(255, 158, 121, 0.35); /* 赋予温暖的橙色浮空软阴影 */
+}
+
+/* 🚀 联动控制：当卡片变为橙色时，内部所有文字字段一并无缝漂白 */
+.offering-card:hover .offering-title,
+.offering-card:hover .offering-desc,
+.offering-card:hover .offering-link {
+  color: #ffffff !important;
+}
+
+/* 文字细节基础 */
+.offering-title {
+  font-family: Georgia, serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #1c1917;
+  line-height: 1.25;
+  margin-bottom: 4px;
+  transition: color 0.25s ease;
+}
+.offering-desc {
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: #57534e;
+  transition: color 0.25s ease;
+}
+
+/* 文字链接样式 */
+.offering-link {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1c1917;
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto; 
+  cursor: pointer;
+  width: fit-content;
+  transition: color 0.25s ease;
+}
+.offering-link .arrow {
+  margin-left: 6px;
+  display: inline-block;
+  transition: transform 0.22s ease;
+}
+/* 悬停时小箭头优雅向右弹开 */
+.offering-card:hover .arrow {
+  transform: translateX(5px);
+}
+
+.footer-more-card {
+  min-height: 160px;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   🎨 像素级图标样式（完美兼容“白底黑图标”与“橙底白图标”的实时响应）
+   ========================================================================== */
+.icon-wrapper { 
+  height: 60px; 
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 5px; 
+}
+
+/* 1. 电脑图标色彩联动 */
+.macbook-icon { width: 50px; }
+.macbook-icon .screen { 
+  height: 30px; border: 2.5px solid #1c1917; border-radius: 5px; display: flex; align-items: center; justify-content: center; 
+  transition: border-color 0.25s ease;
+}
+.macbook-icon .play-btn { 
+  font-size: 9px; transform: rotate(90deg); color: #1c1917; line-height: 1; margin-left: 2px; 
+  transition: color 0.25s ease;
+}
+.macbook-icon .base { 
+  height: 3px; background: #1c1917; border-radius: 0 0 5px 5px; margin-top: 1px; 
+  transition: background 0.25s ease;
+}
+/* 🚀 鼠标移上去时，电脑图标全线洗白 */
+.offering-card:hover .macbook-icon .screen { border-color: #ffffff; }
+.offering-card:hover .macbook-icon .play-btn { color: #ffffff; }
+.offering-card:hover .macbook-icon .base { background: #ffffff; }
+
+
+/* 2. 蓝色钱袋子（默认极简，悬停时内部美元符和绑带完美对位） */
+.money-bag { 
+  width: 40px; height: 44px; background: #1c1917; border-radius: 40% 40% 45% 45%; position: relative; display: flex; align-items: center; justify-content: center; 
+  transition: all 0.25s ease;
+}
+.money-bag .bag-tie { position: absolute; top: 8px; left: 6px; right: 6px; height: 4px; background: #ffffff; border-radius: 2px; transition: background 0.25s;}
+.money-bag .dollar-sign { color: #ffffff; font-weight: 800; font-size: 1.3rem; padding-top: 6px; font-family: -apple-system, sans-serif; transition: color 0.25s;}
+/* 🚀 鼠标移上去时，钱袋子反白成“橙底白袋子” */
+.offering-card:hover .money-bag { background: #ffffff; }
+.offering-card:hover .money-bag .bag-tie { background: #ff9e79; }
+.offering-card:hover .money-bag .dollar-sign { color: #ff9e79; }
+
+
+/* 3. 试卷图标色彩联动 */
+.exam-paper { 
+  width: 36px; height: 44px; border: 2.5px solid #1c1917; border-radius: 5px; position: relative; background: #ffffff; padding: 8px 6px; display: flex; flex-direction: column; gap: 5px; 
+  transition: all 0.25s ease;
+}
+.exam-paper .paper-line { width: 100%; height: 2.5px; background: #1c1917; border-radius: 1px; transition: background 0.25s;}
+.exam-paper .paper-line.short { width: 60%; }
+.exam-paper .paper-badge { width: 8px; height: 8px; border-radius: 50%; background: #2563eb; position: absolute; bottom: 6px; right: 6px; transition: all 0.25s;}
+/* 🚀 鼠标移上去时，试卷外框反白，线条变为橙色衬底 */
+.offering-card:hover .exam-paper { background: #ff9e79; border-color: #ffffff; }
+.offering-card:hover .exam-paper .paper-line { background: #ffffff; }
+.offering-card:hover .exam-paper .paper-badge { background: #ffffff; }
+
+
+/* ==========================================================================
+   底部真实后端文章流
+   ========================================================================== */
+.flow-header .flow-title { 
+  font-family: Georgia, serif; 
+  font-size: 1.4rem; 
+  color: #1c1917; 
+  border-bottom: 2px solid #1c1917; 
+  padding-bottom: 6px; 
+  display: inline-block; 
+}
+.simple-posts-list { 
+  display: flex; 
+  flex-direction: column; 
+  margin-top: 20px; 
+}
+.simple-post-row { 
+  display: flex; 
+  justify-content: space-between; 
+  padding: 20px 0; 
+  border-bottom: 1px solid #ede8da; 
+  cursor: pointer; 
+}
+.simple-row-title { 
+  font-family: Georgia, serif; 
+  font-size: 1.15rem; 
+  font-weight: 600; 
+  color: #333; 
+}
+.simple-row-arrow { 
+  color: #a8a29e; 
+  transition: color 0.2s; 
+}
+.simple-post-row:hover .simple-row-title { 
+  color: #2563eb; 
+}
+.simple-post-row:hover .simple-row-arrow { 
+  color: #1c1917; 
+}
+
+@media (max-width: 992px) {
+  .ali-grid-layout { grid-template-columns: 1fr; gap: 40px; }
+  .ali-profile-sidebar .sticky-box { position: static; }
+}
+@media (max-width: 640px) {
+  .ali-offerings-grid { grid-template-columns: 1fr; gap: 16px; }
+  .card-span-two-rows { grid-column: auto; grid-row: auto; min-height: auto; }
+}

@@ -1,0 +1,105 @@
+/* 与详情页完全对齐的紧凑宽幕导航 */
+.wide-nav {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ede8da;
+  padding-bottom: 20px;
+  margin-bottom: 50px;
+}
+.btn-back {
+  background: none;
+  border: none;
+  color: #78716c;
+  font-family: monospace;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: color 0.25s ease;
+  font-weight: 600;
+}
+.btn-back:hover {
+  color: #1c1917;
+}
+
+/* ==========================================================================
+   🎨 核心改动：发布按钮对齐全站的“珊瑚橙”高级悬停交互
+   ========================================================================== */
+.btn-publish {
+  background: #1c1917; /* 默认状态是克制低调的高级深色 */
+  color: #ffffff;
+  border: 1px solid #1c1917;
+  padding: 10px 28px;
+  font-weight: 600;
+  font-family: -apple-system, sans-serif;
+  font-size: 0.9rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(28, 25, 23, 0.05);
+}
+
+/* 🚀 鼠标悬停时：顺滑锐变为和特色看盘完全同步的高亮珊瑚橙色 */
+.btn-publish:hover:not(:disabled) {
+  background: #ff9e79;
+  border-color: #ff9e79;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 158, 121, 0.3);
+}
+
+/* 🧱 按钮被置灰（disabled）时的优雅视觉 */
+.btn-publish:disabled {
+  background: #f4f2ea;  /* 温暖干净的纸质浅灰色底 */
+  color: #cbd5e1;       /* 柔和文字 */
+  border-color: #ede8da;
+  cursor: not-allowed;  /* 鼠标悬浮时展示禁用图标 */
+  opacity: 1;           /* 覆盖默认的半透明效果 */
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   ✍️ 核心编辑区：对齐 Ali Abdaal 沉浸式 Georgia 衬线打字氛围
+   ========================================================================== */
+.editor-body {
+  max-width: 760px; /* 严格对齐阅读页宽度，确保“所写即所见” */
+  margin: 0 auto;
+}
+.input-title {
+  background: none;
+  border: none;
+  font-family: Georgia, serif; /* 切换为古典人文衬线体 */
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #1c1917;
+  margin-bottom: 25px;
+  outline: none;
+  width: 100%;
+  letter-spacing: -0.5px;
+}
+.input-title::placeholder {
+  color: #d6d1c2;
+}
+
+.input-content {
+  background: none;
+  border: none;
+  font-family: Georgia, serif; /* 切换为古典人文衬线体 */
+  font-size: 1.15rem;
+  color: #292524;
+  line-height: 1.85;
+  letter-spacing: 0.2px;
+  outline: none;
+  resize: none;
+  min-height: 550px;
+  width: 100%;
+}
+.input-content::placeholder {
+  color: #e2ded2;
+}
+
+/* 移动端安全适配 */
+@media (max-width: 768px) {
+  .input-title { font-size: 1.9rem; margin-bottom: 15px; }
+  .input-content { font-size: 1.1rem; }
+  .wide-nav { margin-bottom: 30px; }
+}

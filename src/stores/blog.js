@@ -1,10 +1,17 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+
+const isProd = import.meta.env.PROD;
+const apiBaseURL = isProd 
+  ? 'https://mht-blog-service.onrender.com/api/' 
+  : 'http://localhost:8080/api/';
+
+  
 const api = axios.create({
-  baseURL: 'https://mht-blog-service.onrender.com/api', 
+  baseURL: apiBaseURL,
   timeout: 10000
-})
+});
 
 export const useBlogStore = defineStore('blog', {
   state: () => ({
@@ -18,41 +25,56 @@ export const useBlogStore = defineStore('blog', {
       this.globalError = null
     },
 
-    // 6 大业务接口直调
-    async fetchList() {
-      return await api.get('/blog/list')
+    // 🚀 原有 6 大接口保持纯净
+    async fetchList() { return await api.get('/blog/list') },
+    async fetchDetail(id) { return await api.get(`/blog/${id}`) },
+    async fetchViews(id) { return await api.get(`/blog/${id}/views`) },
+    async createPost(post) { return await api.post('/blog/create', post) },
+    async updatePost(post) { return await api.put('/blog/update', post) },
+    async deletePost(id) { return await api.delete(`/blog/delete/${id}`) },
+
+    // 🔥 新增接口：周刊订阅 API (对应后端 /api/newsletter/subscribe)
+    async subscribeNewsletter(email) {
+      return await api.post('/newsletter/subscribe', { email })
     },
-    async fetchDetail(id) {
-      return await api.get(`/blog/${id}`)
+
+        // 🚀 新增业务接口：获取指定文章的真实留言列表（对应 GET /api/blog/{id}/comments）
+    async fetchComments(postId) {
+      return await api.get(`/blog/${postId}/comments`)
     },
-    async fetchViews(id) {
-      return await api.get(`/blog/${id}/views`)
+
+    // 🚀 新增业务接口：向后端提交留言（对应 POST /api/blog/{id}/comments）
+    async submitComment(postId, commentData) {
+      return await api.post(`/blog/${postId}/comments`, commentData)
     },
-    async createPost(post) {
-      return await api.post('/blog/create', post)
+    // 1. 首页直调：获取激活展示的卡片配置
+    async fetchCardConfigs() {
+      return await api.get('/blog/cards/config')
     },
-    async updatePost(post) {
-      return await api.put('/blog/update', post)
+
+    // 2. 🚀 修复报错：后台直调，拉取卡片池【全部】记录
+    // 路径对齐您的规范：GET /api/blog/cards/all
+    async fetchAllCardConfigs() {
+      return await api.get('/blog/cards/all')
     },
-    async deletePost(id) {
-      return await api.delete(`/blog/delete/${id}`)
+
+    // 3. 🚀 精准按需更新接口
+    // 路径对齐您的规范：POST /api/blog/cards/update-selective
+    async updateCardConfigsSelective(dirtyConfigsList) {
+      return await api.post('/blog/cards/update-selective', dirtyConfigsList)
     }
   }
 })
 
-// 全局响应拦截器：精准剥离统一响应体，解决属性误渲染问题
+// 全局响应拦截器保持原样
 api.interceptors.response.use(
   response => {
     const res = response.data
-    
-    // 1. 如果后端明确返回了错误状态码
     if (res && res.code !== 200) {
       const store = useBlogStore()
       store.setError(res.message || 'OPERATION_FAILED')
       return Promise.reject(new Error(res.message))
     }
-    
-    // 2. 🔥 核心修正：返回真正清洗后的业务数据（即 res.data 里面的文章数组或详情）
     return res.data 
   },
   error => {

@@ -1,0 +1,306 @@
+.detail-nav { 
+  display: flex; 
+  justify-content: space-between; 
+  border-bottom: 1px solid #ede8da; 
+  padding-bottom: 20px; 
+  margin-bottom: 60px; 
+}
+.btn-ali-back { 
+  background: none; 
+  border: none; 
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  color: #6b6661; 
+  cursor: pointer; 
+}
+.btn-ali-back:hover { 
+  color: #1c1917; 
+}
+.btn-link-action { 
+  background: none; 
+  border: none; 
+  font-size: 0.9rem; 
+  font-weight: 500; 
+  color: #78716c; 
+  cursor: pointer; 
+  margin-left: 20px; 
+}
+.btn-link-action:hover { 
+  color: #1c1917; 
+}
+.btn-link-action.danger:hover { 
+  color: #ef4444; 
+}
+
+/* 文章排版区 */
+.ali-article-container { 
+  max-width: 760px; 
+  margin: 0 auto; 
+}
+.article-header { 
+  margin-bottom: 45px; 
+  text-align: center; 
+}
+.article-meta { 
+  font-family: monospace; 
+  font-size: 0.75rem; 
+  color: #a8a29e; 
+  letter-spacing: 1px; 
+  text-transform: uppercase; 
+  margin-bottom: 16px; 
+}
+.article-meta span { 
+  color: #2563eb; 
+  font-weight: 600; 
+}
+.article-title { 
+  font-family: Georgia, serif; 
+  font-size: 2.8rem; 
+  font-weight: 800; 
+  color: #1c1917; 
+  line-height: 1.2; 
+  letter-spacing: -1px; 
+  margin-bottom: 20px; 
+}
+
+.live-pulse-badge { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px; 
+  font-family: monospace; 
+  font-size: 0.7rem; 
+  color: #16a34a; 
+  background: #f0fdf4; 
+  padding: 4px 12px; 
+  border-radius: 20px; 
+  cursor: pointer; 
+}
+.live-pulse-badge .dot { 
+  width: 5px; 
+  height: 5px; 
+  background: #16a34a; 
+  border-radius: 50%; 
+}
+
+/* Georgia 古典书卷正文排版（Ali Abdaal 标志风格） */
+.ali-markdown-body { 
+  font-family: Georgia, serif; 
+  font-size: 1.2rem; 
+  line-height: 1.85; 
+  color: #292524; 
+  letter-spacing: 0.2px; 
+}
+:deep(.ali-markdown-body p) { 
+  margin-bottom: 30px; 
+}
+:deep(.ali-markdown-body h2), 
+:deep(.ali-markdown-body h3) { 
+  font-family: Georgia, serif; 
+  color: #1c1917; 
+  font-weight: 700; 
+  margin-top: 45px; 
+  margin-bottom: 18px; 
+}
+:deep(.ali-markdown-body h2) { 
+  font-size: 1.7rem; 
+  border-bottom: 1px solid #ede8da; 
+  padding-bottom: 6px; 
+}
+:deep(.ali-markdown-body code) { 
+  font-family: monospace; 
+  background: #f4f2ea; 
+  padding: 3px 6px; 
+  border-radius: 4px; 
+  font-size: 0.95rem; 
+  color: #b45309; 
+}
+:deep(.ali-markdown-body pre) { 
+  background: #fdfbf7; 
+  border: 1px solid #ede8da; 
+  padding: 20px; 
+  border-radius: 8px; 
+  overflow-x: auto; 
+  margin: 35px 0; 
+}
+:deep(.ali-markdown-body pre code) { 
+  background: none; 
+  padding: 0; 
+  color: #1c1917; 
+  font-size: 0.9rem; 
+}
+:deep(.ali-markdown-body blockquote) { 
+  margin: 35px 0; 
+  padding-left: 24px; 
+  border-left: 3px solid #2563eb; 
+  color: #57534e; 
+  font-style: italic; 
+}
+
+/* ==========================================================================
+   💬 留言讨论板古典质感样式
+   ========================================================================== */
+.ali-comment-section { 
+  margin-top: 80px; 
+  border-top: 1px solid #ede8da; 
+  padding-top: 40px; 
+}
+.comment-heading { 
+  font-family: Georgia, serif; 
+  font-size: 1.5rem; 
+  font-weight: 700; 
+  color: #1c1917; 
+  margin-bottom: 24px; 
+}
+
+/* 留言表单提交区 */
+.comment-form { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+  margin-bottom: 45px; 
+  background: #fdfaf2; 
+  padding: 24px; 
+  border-radius: 8px; 
+  border: 1px dashed #d6d1c2; 
+}
+.comment-form input, 
+.comment-form textarea { 
+  width: 100%; 
+  padding: 12px; 
+  border: 1px solid #d6d1c2; 
+  border-radius: 6px; 
+  font-size: 0.95rem; 
+  outline: none; 
+  background: #fff; 
+  font-family: inherit; 
+}
+.comment-form textarea { 
+  min-height: 100px; 
+  resize: vertical; 
+  line-height: 1.5; 
+}
+.btn-submit-comment { 
+  padding: 12px 24px; 
+  background: #1c1917; 
+  color: #fff; 
+  border: none; 
+  border-radius: 6px; 
+  font-weight: 600; 
+  cursor: pointer; 
+  align-self: flex-start; 
+  transition: opacity 0.2s; 
+  font-size: 0.9rem; 
+}
+.btn-submit-comment:hover { 
+  opacity: 0.9; 
+}
+.btn-submit-comment:disabled { 
+  background: #d6d1c2; 
+  cursor: not-allowed; 
+}
+
+/* 留言列表区 */
+.comments-list { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+}
+.empty-comments { 
+  color: #87827a; 
+  font-size: 0.95rem; 
+  font-style: italic; 
+}
+.comment-item { 
+  padding-bottom: 20px; 
+  border-bottom: 1px solid #f2eee4; 
+}
+.comment-item:last-child { 
+  border-bottom: none; 
+}
+.comment-meta { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: baseline; 
+  margin-bottom: 8px; 
+}
+.comment-author { 
+  font-weight: 700; 
+  color: #1c1917; 
+  font-size: 1rem; 
+}
+.comment-date { 
+  font-family: monospace; 
+  font-size: 0.75rem; 
+  color: #a8a29e; 
+}
+.comment-content { 
+  color: #44403c; 
+  font-size: 1.05rem; 
+  line-height: 1.6; 
+}
+
+/* 删除确认弹窗毛玻璃效果 */
+.modal-overlay { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  background: rgba(28, 25, 23, 0.4); 
+  backdrop-filter: blur(4px); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  z-index: 999; 
+}
+.modal-card { 
+  background: #fdfbf7; 
+  border: 1px solid #ede8da; 
+  padding: 40px; 
+  border-radius: 12px; 
+  text-align: center; 
+  max-width: 380px; 
+  width: 90%; 
+}
+.modal-text { 
+  font-family: Georgia, serif; 
+  font-size: 1.15rem; 
+  color: #1c1917; 
+  margin-bottom: 24px; 
+}
+.modal-buttons { 
+  display: flex; 
+  justify-content: center; 
+  gap: 20px; 
+}
+.btn-cancel, 
+.btn-confirm { 
+  padding: 10px 20px; 
+  border-radius: 6px; 
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  cursor: pointer; 
+  border: none; 
+}
+.btn-cancel { 
+  background: #ede8da; 
+  color: #57534e; 
+}
+.btn-confirm { 
+  background: #ef4444; 
+  color: #fff; 
+}
+
+.fade-enter-active, 
+.fade-leave-active { 
+  transition: opacity 0.25s; 
+}
+.fade-enter-from, 
+.fade-leave-to { 
+  opacity: 0; 
+}
+
+@media (max-width: 768px) {
+  .article-title { font-size: 2rem; }
+  .ali-markdown-body { font-size: 1.1rem; }
+}

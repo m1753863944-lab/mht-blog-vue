@@ -1,196 +1,182 @@
 <template>
-  <!-- 首页天际控制线方案 + 顶级厂牌 Logo 精修版 -->
-  <div class="container animate-fade-in wide-dashboard">
-    
-    <!-- 首页天际控制线 -->
-    <nav class="top-control-line">
-      <div class="site-status">
-        <template v-if="!blogStore.globalError">
-          <span class="status-dot"></span>
-          <span class="status-text">MHT_BLOG // LIVE</span>
-        </template>
-        <template v-else>
-          <span class="status-dot-err"></span>
-          <span class="status-text-err">STATUS // {{ blogStore.globalError }}</span>
-        </template>
-      </div>
-      <router-link to="/write" class="btn-write-nav">Write Post +</router-link>
-    </nav>
+  <div class="animate-fade-in">
+    <!-- 极简古典导航头 -->
+    <header class="ali-header">
+      <div class="brand-logo" @click="$router.push('/')">MHT // ARCHIVE</div>
+      <nav class="header-links">
+        <router-link to="/write" class="nav-accent-btn">Write Article</router-link>
+      </nav>
+    </header>
 
-    <!-- 下方的三栏网格架构 -->
-    <div class="wrapper-layout">
-      <!-- 左侧：极致缩减的精致侧栏 -->
-      <header class="left-panel">
+    <!-- 主两栏网格比例 -->
+    <div class="ali-grid-layout">
+      
+      <!-- 左栏：个人 IP 精华区 + 高转化订阅器 -->
+      <aside class="ali-profile-sidebar">
         <div class="sticky-box">
-          <!-- 独立先锋 Logo 区域 -->
-          <div class="brand-wrapper">
-            <h1 class="logo-new">M H T</h1>
-            <div class="logo-accent-line"></div>
+          <h1 class="profile-name">Hey, I'm MHT. 👋</h1>
+          <p class="profile-bio">
+            I’m a software engineer and creator. Here, I write about tech stacks, productivity systems, and business ideas that help me live a more deliberate and fulfilling life.
+          </p>
+          
+          <!-- Newsletter 订阅框 -->
+          <div class="ali-newsletter-card">
+            <span class="news-badge">SUNDAY SNIPPETS</span>
+            <h3 class="news-title">Join 500k+ Readers</h3>
+            <p class="news-subtitle">Every Sunday I share actionable productivity tips and life lessons directly to your inbox.</p>
+            
+            <form @submit.prevent="handleSubscribe" class="news-form">
+              <input v-model="email" type="email" placeholder="Enter your email address" required :disabled="subscribing"/>
+              <button type="submit" :disabled="subscribing">{{ subscribing ? 'Joining...' : 'Get the Snippets' }}</button>
+            </form>
+            <p v-if="subscribeSuccess" class="news-success">✓ You're in! Check your email shortly.</p>
           </div>
-          <p class="subtitle-new">ARCHIVE // INDEX</p>
         </div>
-      </header>
+      </aside>
 
-      <!-- 中间分割立线 -->
-      <div class="vertical-divider"></div>
-
-      <!-- 右侧：黄金大内容区 -->
-      <main class="right-panel">
-        <div v-if="loading" class="loading">Loading...</div>
-        <div v-else-if="!list || list.length === 0" class="empty">Void.</div>
+      <!-- 右栏：黄金双列高质感特色看板（🚀 升级为：纯数据库配置驱动外链版） -->
+      <main class="ali-articles-flow">
         
-        <template v-else>
-          <!-- 序号完美回归 #1, #2 虚拟自增 -->
-          <article 
-            v-for="(item, index) in list" 
-            :key="item.id" 
-            class="post-item"
-            @click="$router.push(`/blog/${item.id}`)"
-          >
-            <div class="post-meta">
-              <span class="post-id">#{{ index + 1 }}</span>
+        <!-- 矩阵容器：通过 align-items: start 锁死非对称落差机制 -->
+        <section class="ali-offerings-grid" v-if="cards.length >= 5">
+          
+          <!-- 1. 🔥 标志性珊瑚橙色卡片（绑定第 1 个配置，点击跳转外部 targetUrl） -->
+          <div class="offering-card color-orange card-span-two-rows" @click="goToLink(getCard(1).targetUrl)">
+            <div class="icon-wrapper">
+              <div class="macbook-icon">
+                <div class="screen"><span class="play-btn">▲</span></div>
+                <div class="base"></div>
+              </div>
             </div>
-            <h2 class="post-title">{{ item.title }}</h2>
-            <div class="post-arrow">→</div>
-          </article>
-        </template>
+            <div class="offering-content">
+              <h2 class="offering-title">{{ getCard(1).title }}</h2>
+              <p class="offering-desc">{{ getCard(1).description }}</p>
+              <div class="offering-link">Get started <span class="arrow">→</span></div>
+            </div>
+          </div>
+
+          <!-- 2. 右上角卡片（绑定第 2 个配置） -->
+          <div class="offering-card color-cream" @click="goToLink(getCard(2).targetUrl)">
+            <div class="offering-content">
+              <h2 class="offering-title">{{ getCard(2).title }}</h2>
+              <p class="offering-desc">{{ getCard(2).description }}</p>
+              <div class="offering-link">Get started <span class="arrow">→</span></div>
+            </div>
+          </div>
+
+          <!-- 3. 右中钱袋子卡片（绑定第 3 个配置） -->
+          <div class="offering-card color-cream" @click="goToLink(getCard(3).targetUrl)">
+            <div class="icon-wrapper">
+              <div class="money-bag">
+                <span class="bag-tie"></span>
+                <span class="dollar-sign">$</span>
+              </div>
+            </div>
+            <div class="offering-content">
+              <h2 class="offering-title">{{ getCard(3).title }}</h2>
+              <p class="offering-desc">{{ getCard(3).description }}</p>
+              <div class="offering-link">Get started <span class="arrow">→</span></div>
+            </div>
+          </div>
+
+          <!-- 4. 左下角考试提分卡片（绑定第 4 个配置） -->
+          <div class="offering-card color-cream" @click="goToLink(getCard(4).targetUrl)">
+            <div class="icon-wrapper">
+              <div class="exam-paper">
+                <div class="paper-line"></div>
+                <div class="paper-line short"></div>
+                <div class="paper-badge"></div>
+              </div>
+            </div>
+            <div class="offering-content">
+              <h2 class="offering-title">{{ getCard(4).title }}</h2>
+              <p class="offering-desc">{{ getCard(4).description }}</p>
+              <div class="offering-link">Get started <span class="arrow">→</span></div>
+            </div>
+          </div>
+
+          <!-- 5. 右下角探索更多卡片（绑定第 5 个配置） -->
+          <div class="offering-card color-cream footer-more-card" @click="goToLink(getCard(5).targetUrl)">
+            <div class="offering-content">
+              <h2 class="offering-title">{{ getCard(5).title }}</h2>
+              <div class="offering-link">{{ getCard(5).description }} <span class="arrow">→</span></div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- 下方干净真实的后端文章流（保持不动） -->
+        <div class="flow-header" style="margin-top: 60px;">
+          <h2 class="flow-title">Recent Musings</h2>
+        </div>
+        <div v-if="loading" class="ali-loading">Loading archives...</div>
+        <div v-else class="simple-posts-list">
+          <div v-for="item in list" :key="item.id" class="simple-post-row" @click="$router.push(`/blog/${item.id}`)">
+            <h3 class="simple-row-title">{{ item.title }}</h3>
+            <span class="simple-row-arrow">→</span>
+          </div>
+        </div>
+
       </main>
     </div>
   </div>
+
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useBlogStore } from '../stores/blog'
 
 const blogStore = useBlogStore()
 const list = ref([])
+const cards = ref([]) // 🚀 核心：存放来自后端的 5 条卡片配置数据
 const loading = ref(true)
 
-// 4秒自动熔断恢复
-watch(() => blogStore.globalError, (newVal) => {
-  if (newVal) {
-    setTimeout(() => {
-      blogStore.clearError()
-    }, 4000)
+const email = ref('')
+const subscribing = ref(false)
+const subscribeSuccess = ref(false)
+
+// 安全防御函数：通过位置索引（1-5）精准且稳健地提取卡片对象
+const getCard = (index) => {
+  return cards.value.find(c => c.cardIndex === index) || { title: '', description: '', targetUrl: '' }
+}
+
+// 🚀 核心动效：点击卡片时，触发高智感的新标签页外链跳转
+const goToLink = (url) => {
+  if (url) {
+    window.open(url, '_blank')
   }
-})
+}
 
 onMounted(async () => {
-  try {
-    // 拦截器清洗后，这里拿到的就是干干净净的后端真实 List 数组了
-    list.value = await blogStore.fetchList()
-  } catch (error) {
-    console.error(error)
-  } finally {
-    loading.value = false
+  try { 
+    // 异步并行：同时去加载文章列表和卡片的全局配置
+    const [postsData, configsData] = await Promise.all([
+      blogStore.fetchList(),
+      blogStore.fetchCardConfigs()
+    ])
+    list.value = postsData
+    cards.value = configsData
+  } catch (error) { 
+    console.error(error) 
+  } finally { 
+    loading.value = false 
   }
 })
+
+const handleSubscribe = async () => {
+  if (!email.value) return
+  subscribing.value = true
+  try {
+    await blogStore.subscribeNewsletter(email.value)
+    subscribeSuccess.value = true
+    email.value = ''
+  } catch (error) { 
+    console.error(error) 
+  } finally { 
+    subscribing.value = false 
+  }
+}
 </script>
 
-<style scoped>
-/* 首页顶层控制线 */
-.top-control-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
-  margin-bottom: 50px;
-}
-.site-status {
-  display: flex;
-  align-items: center;
-  font-family: monospace;
-  font-size: 0.8rem;
-  color: #888;
-}
-.status-dot {
-  width: 5px; height: 5px; background: #00aa55; border-radius: 50%; margin-right: 8px;
-}
-.status-dot-err {
-  width: 5px; height: 5px; background: #ff3b30; border-radius: 50%; margin-right: 8px;
-}
-.status-text-err {
-  color: #ff3b30;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-  animation: pulse-text 1.5s infinite;
-}
-@keyframes pulse-text {
-  0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; }
-}
-
-.btn-write-nav {
-  color: #111; text-decoration: none; font-family: monospace; font-size: 0.9rem; transition: opacity 0.2s;
-}
-.btn-write-nav:hover { opacity: 0.6; }
-
-/* 网格架构 */
-.wrapper-layout {
-  display: grid;
-  grid-template-columns: 220px 1px 1fr; 
-  gap: 50px;
-}
-.left-panel .sticky-box {
-  position: sticky;
-  top: 50px;
-}
-
-/* 独立厂牌 Logo 视觉区 */
-.brand-wrapper {
-  display: inline-block;
-  margin-bottom: 16px;
-}
-.logo-new {
-  font-family: monospace, -apple-system, sans-serif;
-  font-size: 2.4rem; 
-  font-weight: 300;  
-  letter-spacing: 12px; 
-  line-height: 1;
-  color: #111;
-  text-transform: uppercase;
-}
-.logo-accent-line {
-  width: 40px; height: 1px; background-color: #111; margin-top: 14px;
-}
-.subtitle-new {
-  font-family: monospace; color: #999; font-size: 0.75rem; letter-spacing: 2px;
-}
-
-/* 中间竖线 */
-.vertical-divider {
-  background-color: #eee;
-  height: calc(100vh - 170px); 
-  position: sticky;
-  top: 50px;
-}
-
-/* 右侧内容区 */
-.right-panel { display: flex; flex-direction: column; }
-.post-item {
-  display: flex; align-items: center; padding: 35px 0; border-bottom: 1px solid #eee; cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.post-item:first-child { padding-top: 0; }
-.post-item:hover { border-color: #111; }
-.post-item:hover .post-title { transform: translateX(25px); color: #111; }
-.post-item:hover .post-arrow { opacity: 1; transform: translateX(0); }
-.post-meta { width: 90px; font-family: monospace; color: #bbb; }
-
-.post-title {
-  flex: 1; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 1.6rem; font-weight: 400; color: #333; transition: transform 0.4s ease, color 0.4s ease;
-}
-.post-arrow {
-  opacity: 0; color: #111; transform: translateX(-15px); transition: all 0.4s ease; font-size: 1.5rem;
-}
-.loading, .empty { font-family: monospace; color: #999; }
-
-@media (max-width: 992px) {
-  .wrapper-layout { grid-template-columns: 1fr; gap: 40px; }
-  .vertical-divider { display: none; }
-  .left-panel .sticky-box { position: static; }
-  .post-item:first-child { padding-top: 35px; }
-}
-</style>
+<style scoped src="./BlogList.css"></style>
